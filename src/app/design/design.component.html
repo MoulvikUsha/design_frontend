@@ -22,14 +22,21 @@
                         placeholder="addressLine2">
                 </div>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="city" formControlName="city" placeholder='city'>
+                    <!-- <input type="text" class="form-control" id="city" formControlName="city" placeholder='city'> -->
+                    <select class="form-control" formControlName="city">
+                        <option value="" disabled selected>Select an option</option>
+                        <option *ngFor="let cities of citiesArray" [value]="cities">{{ cities }}</option>
+                    </select>
                 </div>
             </div>
             <br>
             <div class="row">
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="country" formControlName="country"
-                        placeholder='country'>
+                    <!-- <input type="text" class="form-control" id="country" formControlName="country" placeholder='country'> -->
+                    <select class="form-control" formControlName="country" (change)="onOptionChange($event)">
+                        <option value="" disabled selected>Select an option</option>
+                        <option *ngFor="let country of countriesArray" [value]="country">{{ country }}</option>
+                    </select>
                 </div>
                 <div class="col-sm-6">
                     <input type="number" class="form-control" id="state" formControlName="pin" placeholder="PIN Code">
@@ -42,10 +49,10 @@
                 placeholder="Enter Primary Phone">
             <div
                 *ngIf="customerForm.get('primaryPhone').invalid && (customerForm.get('primaryPhone').dirty || customerForm.get('primaryPhone').touched)">
-                <div *ngIf="customerForm.get('primaryPhone').errors.required" class="error-message">Aadhaaar is
+                <div *ngIf="customerForm.get('primaryPhone').errors.required" class="error-message">Primary Phone is
                     required.
                 </div>
-                <div *ngIf="customerForm.get('primaryPhone').errors.pattern" class="error-message">Aadhaaar is not
+                <div *ngIf="customerForm.get('primaryPhone').errors.pattern" class="error-message">Primary Phone is not
                     valid.
                 </div>
             </div>
@@ -76,10 +83,10 @@
                 placeholder="Enter PAN Number">
             <div
                 *ngIf="customerForm.get('pancard').invalid && (customerForm.get('pancard').dirty || customerForm.get('pancard').touched)">
-                <div *ngIf="customerForm.get('pancard').errors.required" class="error-message">Email is required.</div>
-                <div *ngIf="customerForm.get('pancard').errors.pattern" class="error-message">Email is not valid.</div>
+                <div *ngIf="customerForm.get('pancard').errors.required" class="error-message">PAN is required.</div>
+                <div *ngIf="customerForm.get('pancard').errors.pattern" class="error-message">PAN is not valid.</div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" [disabled]="this.customerForm.invalid">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

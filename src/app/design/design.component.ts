@@ -10,6 +10,9 @@ import { DesignService } from "../design.service";
 export class DesignComponent implements OnInit {
 
   customerForm: FormGroup;
+  countriesArray = [];
+  selectedOption: string;
+  citiesArray = [];
 
   constructor(private fb: FormBuilder, private designService: DesignService) {
     this.customerForm = this.fb.group({
@@ -27,7 +30,30 @@ export class DesignComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // this.designService.countries().subscribe(countries => {
+    //   countries.data.forEach(element => {
+    //     this.countriesArray.push(element.country);
+    //   })
+    // })
+  }
+
+
+  // onOptionChange(event: any) {
+  //   this.selectedOption = event.target.value;
+  //   this.designService.countries().subscribe(countries => {
+  //     console.log('countries:', countries);
+  //     countries.data.forEach(element => {
+  //       let country = this.customerForm.get('country').value;
+  //       element.cities.forEach(city => {
+  //         if (country == element.country) {
+  //           this.citiesArray.push(city);
+  //         }
+  //       });
+  //     })
+  //   })
+  //   console.log('citiesArray:', this.citiesArray);
+  // }
 
   onSubmit() {
     this.designService.postCustomers(this.customerForm.value).subscribe(res => {

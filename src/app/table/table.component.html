@@ -1,0 +1,31 @@
+<div class="container mt-3">
+    <div class="serach">
+        <div class="serchData">
+            <h5><b>Search Element</b></h5>
+            <input class="form-control mr-sm-2 my-3" type="search" placeholder="Search from Data List"
+                [(ngModel)]="searchText" (input)="performFilter(searchText)">
+        </div>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" (click)="sortTable('id')">ID</th>
+                    <th scope="col" (click)="sortTable('title')">Title</th>
+                    <th scope="col">Completed or Not</th>
+                </tr>
+            </thead>
+            <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                <tr class="" *ngFor="let item of getPageItems()" cdkDrag>
+                    <td>{{item.id}}</td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.completed}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button class="btn btn-light previous" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+            <button class="btn btn-light next" (click)="nextPage()" [disabled]="currentPage === getTotalPages()">Next</button>
+        </div>
+    </div>
+</div>

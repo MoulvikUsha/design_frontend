@@ -13,4 +13,16 @@ export class DesignService {
   postCustomers(customerForm): Observable<any> {
     return this.http.post<any>(`${environment.nodeApiUrl}/customers`, customerForm);
   }
+
+  getCustomers(): Observable<any> {
+    return this.http.get<any>(`${environment.nodeApiUrl}/getCustomers`);
+  }
+
+  countries() {
+    return this.http.get('https://countriesnow.space/api/v0.1/countries');
+  }
+
+  pinCodes() {
+    return this.http.get('https://data.gov.in/catalog/all-india-pincode-directory');
+  }
 }

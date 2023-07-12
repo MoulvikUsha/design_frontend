@@ -1,17 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DesignComponent } from './design/design.component';
+import { TableComponent } from './table/table.component';
 
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'design'
+    redirectTo: 'table'
   },
   {
     path: 'design',
     component: DesignComponent
+  },
+  {
+    path: 'table',
+    component: TableComponent
   }
 ];
 
