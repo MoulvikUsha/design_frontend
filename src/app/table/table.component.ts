@@ -1,27 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CdkDragDrop, CdkDrag, CdkDropList, CdkDropListGroup, moveItemInArray, transferArrayItem, CdkDragPlaceholder } from '@angular/cdk/drag-drop';
-import { PageEvent } from '@angular/material';
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
 
   collection: any;
   response: any;
-
   currentPage: number = 1;
   itemsPerPage: number = 10;
-
   sortColumn: string;
   sortDirection: string;
+  newArray = [];
+  button1Active: boolean = false;
+  button2Active: boolean = false;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.getJson();
+    this.generateRandomDates();
   }
 
   getJson() {
@@ -38,10 +41,8 @@ export class TableComponent implements OnInit {
     );
   }
 
-
   // PAGINATION BASED ON ROWS
   onSelectChange(value) {
-    console.log("🚀 ~ file: table.component.ts:78 ~ TableComponent ~ onSelectChange ~ valu̥e:", value);
     return this.itemsPerPage = value;
   }
 
@@ -69,7 +70,7 @@ export class TableComponent implements OnInit {
     if (this.sortColumn === column) {
       return this.sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward';
     }
-    return 'unfold_more';
+    return "arrow_upward";
   }
 
 
@@ -78,4 +79,45 @@ export class TableComponent implements OnInit {
     moveItemInArray(this.collection, event.previousIndex, event.currentIndex);
   }
 
+  // DATA SELECTION
+  activateButton(booleanValue): void {
+    if (booleanValue === true) {
+      this.button1Active = true;
+      this.button2Active = false;
+      this.collection.forEach(element => {
+        if (element.completed == true) {
+          this.newArray.push(element);
+          this.collection = this.newArray;
+        }
+      });
+    } else if (booleanValue === false) {
+      this.button1Active = false;
+      this.button2Active = true;
+      this.collection.forEach(element => {
+        if (element.completed == false) {
+          this.newArray.push(element);
+          this.collection = this.newArray;
+        }
+      });
+    }
+  }
+
+  // DATE
+  generateRandomDates() {
+    for (let i = 0; i < 200; i++) {
+      setTimeout(() => {
+        this.collection.forEach(element => {
+          const randomDate = this.getRandomDate();
+          const currentDate = moment(randomDate).format('DD/MM/YYYY');
+          element.date = currentDate;
+        });
+      }, 110);
+    }
+  }
+  getRandomDate(): Date {
+    const startDate = new Date(2000, 0, 1);
+    const endDate = new Date();
+    const randomTimestamp = startDate.getTime() + (Math.random() * (endDate.getTime() - startDate.getTime()));
+    return new Date(randomTimestamp);
+  }
 }
